@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users profile & root documents
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      // Allow user to write/update their own assessment and routine
+      allow write: if request.auth != null && request.auth.uid == userId;
+
+      // Daily Quests subcollection: Users can read their daily quests
+      match /dailyQuests/{date} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        // Quests are written and validated by Cloud Functions or user sync
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // Quest History subcollection: Read-only for client, written on completion
+      match /questHistory/{questId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // Progression History subcollection
+      match /progressionHistory/{recordId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Hunter profile legacy compatibility collection
+    match /hunterProfiles/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

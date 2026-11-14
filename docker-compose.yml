@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: thesystem-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: thesystem_dev
+      MYSQL_USER: thesystem
+      MYSQL_PASSWORD: thesystem
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "thesystem", "-pthesystem"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: thesystem-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_USERNAME: thesystem
+      DB_PASSWORD: thesystem
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/thesystem_dev?createDatabaseIfNotExist=true&serverTimezone=UTC
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

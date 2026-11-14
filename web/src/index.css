@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Chakra+Petch:wght@400;600&display=swap');
+
+@theme {
+  --color-navy: #0a0e1a;
+  --color-surface: #0d1326;
+  --color-card: #111827;
+  --color-neon-blue: #00d4ff;
+  --color-neon-blue-secondary: #0080ff;
+  --color-gold: #ffd700;
+  --color-gold-dark: #ffaa00;
+  
+  --color-rank-E: #6b7280;
+  --color-rank-D: #22c55e;
+  --color-rank-C: #3b82f6;
+  --color-rank-B: #a855f7;
+  --color-rank-A: #f97316;
+  --color-rank-S: #ffd700;
+
+  --font-rajdhani: 'Rajdhani', sans-serif;
+  --font-chakra: 'Chakra Petch', sans-serif;
+
+  --shadow-holo: 0 0 20px rgba(0, 212, 255, 0.4);
+  --shadow-gold: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+:root {
+  --color-navy: #0a0e1a;
+  --color-surface: #0d1326;
+  --color-card: #111827;
+  --color-neon-blue: #00d4ff;
+  --color-neon-blue-secondary: #0080ff;
+  --color-gold: #ffd700;
+  --color-gold-dark: #ffaa00;
+}
+
+body {
+  background: #0a0e1a;
+  color: #e2e8f0;
+  font-family: 'Chakra Petch', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 212, 255, 0.02) 2px,
+    rgba(0, 212, 255, 0.02) 4px
+  );
+  pointer-events: none;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,212,255,0.4); }
+  50% { box-shadow: 0 0 30px rgba(0,212,255,0.8); }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-40px); opacity: 0; }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
